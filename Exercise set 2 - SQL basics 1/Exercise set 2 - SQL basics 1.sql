@@ -51,10 +51,7 @@ SELECT * FROM emps WHERE dept NOT LIKE 'A' AND dept NOT LIKE 'B' AND dept NOT LI
 SELECT * FROM dept LIMIT 5 OFFSET 9; 
 
 -- 9 - Select departments with budget between 57000 and 93000. Set column name as Limited.
--- Wasn't sure which column name I was supposed to rename. So, I included all three.
-SELECT dept AS Limited, budget FROM dept WHERE budget BETWEEN 57000 AND 93000; -- pretty sure this is the right one
-SELECT budget as Limited FROM dept WHERE budget BETWEEN 57000 AND 93000;
-SELECT dept as Limited FROM dept WHERE budget BETWEEN 57000 AND 93000;
+SELECT dept AS Limited, budget FROM dept WHERE budget BETWEEN 57000 AND 93000;
 
 -- 10 - Select department having ABEY M as a manager.
 SELECT * FROM dept WHERE manager='ABEY M';
