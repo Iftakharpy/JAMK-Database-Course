@@ -64,6 +64,7 @@ SELECT gname AS firstname, surname, LENGTH(surname) AS surname_length
 	FROM emps 
 	WHERE LENGTH(surname)>6;
 
+
 ---------------------------------------------------------------------------------------------------
 -- Other functions
 ---------------------------------------------------------------------------------------------------
@@ -105,27 +106,8 @@ FROM TargetTable
 
 
 /*  
-------------------------- Analysis for the Why -----------------------------
-- CURRENT_USER returns the current_user that's logged in.
-- CURRENT_DATE returns current date in 'yyyy-mm-dd' format.
-    In the query "CAST(CURRENT_DATE AS CHAR(10))" does the same thing.
-
-In the SELECT query CURRENT_USER and CheckIt columns are returned in the result set.
-    The number of rows depends on the number of rows stored in the "TargetTable".
-    It will return the same number of rows stored in the "TargetTable".
-        If "TargetTable" has 0 records then the query won't return any result.
-    The result will always be the same.
-    
-    CheckIt column's values will depend on `CAST(CURRENT_DATE AS CHAR(10)) <= '2011-02-22'` comparison operation.
-    If the current date is smaller than or equals to the string '2011-02-22' then the value would be 'OK'.
-    Otherwise the result value will be 'Late'.
-    
-    If the "TargetTable" doesn't exist in the currently selected database error will occur.
-    The error message will be something like this `Error Code: 1146. Table 'exercise.TargetTable' doesn't exist`
-    All of the columns will be indentical in the result set.
-
-
 ------------------------- What the SELECT query returns -----------------------------
+
 Initially, I replaced "TargetTable" with "sdept" the result was 
     `
     CURRENT_USER    |   CheckIt
@@ -145,4 +127,25 @@ CURRENT_USER    |   CheckIt
 ----------------|-----------
 root@localhost	|   Late
 `
+
+
+------------------------- Analysis for the Why -----------------------------
+
+- CURRENT_USER returns the current_user that's logged in.
+- CURRENT_DATE returns current date in 'yyyy-mm-dd' format.
+    In the query "CAST(CURRENT_DATE AS CHAR(10))" does the same thing.
+
+In the SELECT query CURRENT_USER and CheckIt columns are returned in the result set.
+    The number of rows depends on the number of rows stored in the "TargetTable".
+    It will return the same number of rows stored in the "TargetTable".
+        If "TargetTable" has 0 records then the query won't return any result.
+    The result will always be the same.
+    
+    CheckIt column's values will depend on `CAST(CURRENT_DATE AS CHAR(10)) <= '2011-02-22'` comparison operation.
+    If the current date is smaller than or equals to the string '2011-02-22' then the value would be 'OK'.
+    Otherwise the result value will be 'Late'.
+    
+    If the "TargetTable" doesn't exist in the currently selected database error will occur.
+    The error message will be something like this `Error Code: 1146. Table 'exercise.TargetTable' doesn't exist`
+    All of the columns will be indentical in the result set.
 */
