@@ -10,11 +10,22 @@
 --          Surname First_letter_of_firstname (For example Johnson B). 
 --          Order result set by surname.
 --      In addition for this new name column, present department Duty in the result set.
-
+SELECT  e.surname, e.gname as firstname,
+        CONCAT(COALESCE(e.surname, ''), ' ', LEFT(COALESCE(e.gname, ''), 1)) AS EmployeeName,
+        d.duty
+FROM emps AS e
+INNER JOIN dept AS d
+ON e.dept=d.dept
+WHERE e.dept = 'A'
+ORDER BY e.surname;
 
 -- 2 - Select all employees and include also those who don't have department set.
 --      Include firstname, surname, department and duty of department in the result set.
-
+SELECT e.gname as firstname, e.surname, e.dept, d.duty
+FROM emps AS e
+LEFT JOIN dept AS d
+ON e.dept=d.dept
+ORDER BY e.dept;
 
 -- 3 - Select employees who have MB as a province (PROV) and whose manager is Black D.
 --      Present employee number and whole name in the result set.
