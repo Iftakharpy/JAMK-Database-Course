@@ -11,4 +11,4 @@ Achieved grades
 | Exercise - 3                |       due         |      3      |
 | Exercise - 5                |       due         |      3      |
 | Exercise - 6                |       due         |      3      |
-| Exercise - 7                |       due         |      3      |
+| Exercise - 7                |       due         |      2      |
