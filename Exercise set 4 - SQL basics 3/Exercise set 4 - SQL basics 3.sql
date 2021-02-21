@@ -10,14 +10,13 @@
 --          Surname First_letter_of_firstname (For example Johnson B). 
 --          Order result set by surname.
 --      In addition for this new name column, present department Duty in the result set.
-SELECT  e.surname, e.gname AS firstname,
-        CONCAT(COALESCE(e.surname, ''), ' ', LEFT(COALESCE(e.gname, ''), 1)) AS EmployeeName,
+SELECT CONCAT(COALESCE(e.surname, ''), ' ', LEFT(COALESCE(e.gname, ''), 1)) AS EmployeeName,
         d.duty
 FROM emps AS e
 INNER JOIN dept AS d
 ON e.dept=d.dept
 WHERE e.dept = 'A'
-ORDER BY e.surname; -- checked
+ORDER BY e.surname;
 
 -- 2 - Select all employees and include also those who don't have department set.
 --      Include firstname, surname, department and duty of department in the result set.
@@ -25,7 +24,7 @@ SELECT e.gname AS firstname, e.surname, e.dept, d.duty
 FROM emps AS e
 LEFT JOIN dept AS d
 ON e.dept=d.dept
-ORDER BY e.dept; -- checked
+ORDER BY e.dept; -- extra: order
 
 -- 3 - Select employees who have MB as a province (PROV) and whose manager is Black D.
 --      Present employee number and whole name in the result set.
@@ -35,7 +34,7 @@ FROM emps AS e
 INNER JOIN dept AS d
 ON e.dept=d.dept
 WHERE e.prov='MB' AND d.manager='Black D'
-ORDER BY e.empnum; -- checked
+ORDER BY e.empnum; -- extra: order
 
 -- 4 - Select all managers who have more than 10 employees on their department.
 --      Present manager and employee count in the result set.
@@ -48,7 +47,7 @@ FROM ( SELECT d.manager, COUNT(e.empnum) AS employee_count
        GROUP BY d.manager
     ) AS st -- sub_table
 WHERE st.employee_count > 10
-ORDER BY st.employee_count DESC; -- checked
+ORDER BY st.employee_count DESC;
 
 -- 5 - Create two columns for the result set:
 --          One for employees so that employee name is presented in the following format:
@@ -57,7 +56,7 @@ ORDER BY st.employee_count DESC; -- checked
 --      Give columns the following names for the result set:
 --          Name and Type.
 --      Order results primarily by type and secondarily by name.
-SELECT  CONCAT(COALESCE(e.surname, ''), ' ', COALESCE(e.gname, '')) AS emp_name,
+SELECT  CONCAT(COALESCE(e.surname, ''), ' ', COALESCE(e.gname, '')) AS Name,
         CASE
             -- manager_name format = 'surname first_latter_of_firstname'
             WHEN CONCAT(COALESCE(e.surname, ''), ' ', COALESCE(LEFT(e.gname, 1), '')) 
@@ -65,7 +64,7 @@ SELECT  CONCAT(COALESCE(e.surname, ''), ' ', COALESCE(e.gname, '')) AS emp_name,
             ELSE 'employee'
         END AS Type
 FROM emps AS e
-ORDER BY Type, emp_name; -- confusion
+ORDER BY Type, Name; -- confusion: manager_name_format
 
 
 ------------------------------------------------------------------------------------------
@@ -76,10 +75,11 @@ ORDER BY Type, emp_name; -- confusion
 --      1. Select employees whose department is between A-D and
 --      2. Select employees whose firstname starts with letter B.
 --      Include department, firstname, surname and city in the result set.
-SELECT dept, gname AS firstname, surname, city FROM emps WHERE dept BETWEEN 'A' AND 'D'
+SELECT dept, gname AS firstname, surname, city FROM emps WHERE dept BETWEEN 'A' AND 'D' -- 1
     UNION
-SELECT dept, gname AS firstname, surname, city FROM emps WHERE LEFT(gname, 1)='B'
-ORDER BY dept, firstname; -- confusion
+SELECT dept, gname AS firstname, surname, city FROM emps WHERE LEFT(gname, 1)='B' -- 2
+ORDER BY dept, firstname; -- extra: order, 
+                          -- confusion: is numbered queries are correct or should have been one query
 
 -- 7 - Use both UNION and JOIN and get the following information in one result set:
 --          1. Employees who work in department having budget between 50000-100000
@@ -87,16 +87,17 @@ ORDER BY dept, firstname; -- confusion
 --          Result set should include department, budget, employees firstname and surname as well as computer's identifier
 --          Result set should be in ascending order by department
 SELECT gname AS firstname, surname, pc, e.dept, budget 
-FROM emps AS e 
-INNER JOIN dept AS d
-ON e.dept=d.dept
-WHERE budget BETWEEN 50000 AND 100000
-    UNION
+    FROM emps AS e 
+    INNER JOIN dept AS d
+    ON e.dept=d.dept
+    WHERE budget BETWEEN 50000 AND 100000 -- 1
+        UNION
 SELECT gname as firstname, surname, pc, e.dept, budget
-FROM emps AS e
-INNER JOIN dept AS d
-ON e.dept=d.dept
-WHERE LEFT(pc, 1)='T'; -- confusion 
+    FROM emps AS e
+    INNER JOIN dept AS d
+    ON e.dept=d.dept
+    WHERE LEFT(pc, 1)='T' -- 2
+ORDER BY dept ASC; -- confusion: is numbered queries are correct or should have been one query
 
 
 ------------------------------------------------------------------------------------------
@@ -108,11 +109,11 @@ WHERE LEFT(pc, 1)='T'; -- confusion
 SELECT empnum, gname AS firstname, surname, dept, rate
 FROM emps AS e
 WHERE dept='A' AND
-    rate NOT IN (SELECT rate FROM emps WHERE dept='B'); -- checked
+      rate NOT IN (SELECT rate FROM emps WHERE dept='B');
 
 -- 9 - Select employees whose department's duty is same as the employee Peter Curry.
 --      Result set should include department, duty and the firstname and surname of employee.
-SELECT gname AS firstname, surname, e.dept, duty
+SELECT e.dept, duty, gname AS firstname, surname
 FROM emps AS e
 INNER JOIN dept AS d
 ON e.dept=d.dept
@@ -120,19 +121,31 @@ WHERE duty = (SELECT d.duty
             FROM emps AS e
             INNER JOIN dept AS d
             ON e.dept=d.dept
-            WHERE gname = 'PETER' AND SURNAME = 'CURRY'); -- checked
+            WHERE gname = 'Peter' AND surname = 'Curry');
 
 -- 10 - Select firstname, surname and phone numbers of employees whose department's duty is marketing
 --          or whose department's manager is Mark G.
-SELECT gname AS firstname, surname, phone, duty, manager
-FROM emps AS e
-INNER JOIN dept AS d
-ON e.dept=d.dept
-WHERE LOWER(duty)='marketing' OR manager = 'Mark G'
-ORDER BY duty, firstname; -- checked
+-- solve 1
+SELECT gname AS firstname, surname, phone
+    FROM emps AS e
+    INNER JOIN dept AS d
+    ON e.dept=d.dept
+    WHERE LOWER(duty)='marketing' OR manager = 'Mark G';
+-- solve 2
+SELECT gname AS firstname, surname, phone
+    FROM emps AS e
+    INNER JOIN dept AS d
+    ON e.dept=d.dept
+    WHERE LOWER(duty)='marketing' 
+        UNION
+SELECT gname AS firstname, surname, phone
+    FROM emps AS e
+    INNER JOIN dept AS d
+    ON e.dept=d.dept
+    WHERE manager = 'Mark G';
 
 -- 11 - Use subquery to select all employees whose rate value is the greatest possible.
 SELECT gname AS firstname, surname, rate
 FROM emps AS e
 WHERE rate=(SELECT MAX(rate) FROM emps)
-ORDER BY firstname; -- checked
+ORDER BY firstname; -- extra: order
