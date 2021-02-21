@@ -2,6 +2,9 @@
 
 This repo contains the questions and the answers which I solved during the onging period of the course.
 
+## Exercise Database Design/Schema
+![Databse Design/Schema](/ocelot_database_tables.png)
+
 ## Achieved grades
 | Exercise Name                                      |  Achieved Grade   | Total Grade |
 | :---                                               |      :----:       |    :---:    |
