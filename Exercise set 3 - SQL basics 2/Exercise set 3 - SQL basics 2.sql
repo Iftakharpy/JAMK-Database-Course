@@ -31,8 +31,8 @@ SELECT MAX(rate) AS Greatest, MIN(rate) AS Smallest FROM emps WHERE city='Davis'
 --      Result set column name should be Count.
 --      Set result set by Count column in descending order.
 SELECT dept, COUNT(empnum) AS Count 
-	FROM emps 
-	WHERE rate > 10 
+    FROM emps 
+    WHERE rate > 10 
     GROUP BY dept 
     ORDER BY Count DESC;
 
@@ -93,7 +93,7 @@ SELECT dept, duty, budget,
     CASE 
         WHEN budget<100000 THEN 'Low'
         WHEN budget>100000 THEN 'High'
-        ELSE 'Unspecified'
+        ELSE 'Medium'
     END AS budget_categorization
     FROM dept
     ORDER BY budget DESC;
@@ -105,8 +105,6 @@ SELECT city, AVG(rate) AS city_averages
     FROM emps
     GROUP BY city
     ORDER BY city_averages DESC;
-
-
 
 -- 11 - Analyze what the following SELECT query returns and why (not related to Ocelot training database).
 /*  SQL SELECT query
@@ -134,8 +132,8 @@ FROM TargetTable
     root@localhost	|   Late
     `
     This is because sdept table had 3 records. 
-    As, CURRENT_DATE is '2021-02-19' which is greater than '2011-02-22' so CheckIt is 'Late' for every column.
-    The CURRENT_USER was 'root@localhost' and that remains the same if someone doesn't change one's username.
+    As, CURRENT_DATE is '2021-02-24' which is greater than '2011-02-22' so CheckIt is 'Late' for every column.
+    The CURRENT_USER was 'root@localhost' and that remains the same untill the query returns result set.
 
 2. In the next turn, I created a table and named it 'TargetTable' with 'name' attribute. 
     Then inserted a record with value 'Iftakhar'.
@@ -164,13 +162,42 @@ In the SELECT query CURRENT_USER and CheckIt columns are returned in the result 
     It will return the same number of rows stored in the "TargetTable".
         If "TargetTable" has 0 records then the query won't return any result.
     The result will always be the same. 
-    Unless, someone changes the system datetime and the logged in user.
+    Unless, someone changes the system datetime and/or the logged in user.
     
-    CheckIt column's values will depend on `CAST(CURRENT_DATE AS CHAR(10)) <= '2011-02-22'` comparison operation.
+    CheckIt column's values will depend on `CAST(CURRENT_DATE AS CHAR(10)) <= '2011-02-22'` string comparison operation.
     If the current date is smaller than or equals to the string '2011-02-22' then the value would be 'OK'.
     Otherwise the result value will be 'Late'.
     
     If the "TargetTable" doesn't exist in the currently selected database error will occur.
     The error message will be something like this `Error Code: 1146. Table 'exercise.TargetTable' doesn't exist`
     All of the columns will be identical in the result set.
+*/
+
+
+
+
+-- Knowing string comparison is essential for date comparison.
+-- Because time and dates are stored in sql in string data types.
+
+-- Note: String comparison in sql is weird. Also strings are case insensitive.
+/* From my understanding through trial and error here is an explanation for string comparison.
+
+String comparison starts from start/left side of a two strings.
+String comparison continues as long as the characters are same.
+When a different character is found between the strings the charcters ASCII values are compared.
+Whichever char is greater according to ASCII table that is the greater character and
+the string containing the first greater character is the greater. The other string is the smaller one.
+If both of the strings are identical even if Casing doesn't match the strings will still be equal.
+
+
+Examples:
+    1. 'hello' = 'HELLO' -> True
+    2. 'hello' > 'hELlq' -> False
+    3. 'hello' < 'hELlq' -> True
+    4. 'hello' = 'hELlq' -> False
+    
+    5. 'hello1' > 'hello' -> True
+    
+    6. 'aelloworld' > 'hello' -> False
+    7. 'z' > 'aello' -> True
 */
