@@ -63,6 +63,8 @@ FOR EACH ROW
 DELIMITER ;
 
 -- 6 - Modify previously created input validation so that inserted value must also be even (num % 2 = 0).
+-- should delete the previously created trigger
+-- DROP TRIGGER validate_salary;
 DELIMITER $$
 CREATE TRIGGER validate_salary BEFORE INSERT ON SALARIES
 FOR EACH ROW
@@ -72,3 +74,5 @@ FOR EACH ROW
         END IF;
     END $$
 DELIMITER ;
+
+-- Note: Triggers can't be ALTERED.
