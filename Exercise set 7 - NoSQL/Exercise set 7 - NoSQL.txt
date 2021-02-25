@@ -1,0 +1,46 @@
+|-----------------------------|
+|          DEPT               |
+|-----------|-----------------|
+| DEPT      |  varchar(4)* pk |
+| MANAGER   |  varchar(13)    |
+| DUTY      |  varchar(12)    |
+| BUDGET    |  decimal(10,2)  |
+|-----------|-----------------|
+
+|-------------------------------|
+|            EMPS               |
+|-------------|-----------------|
+| EMPNUM      | decimal(3,0) PK |
+| DEPT        | varchar(4)      |
+| SURNAME     | varchar(12)     |
+| GNAME       | varchar(9)      |
+| ADDRESS     | varchar(18)     |
+| CITY        | varchar(10)     |
+| PROV        | char(2)         |
+| PC          | varchar(6)      |
+| PHONE       | char(8)         |
+| RATE        | decimal(6,2)    |
+| TAXCODE     | decimal(2,0)    |
+| DEDUCTION   | decimal(6,2)    |
+|-------------|-----------------|
+
+
+// 1 - Firstly, create two document collections for the data.
+//      Use SQL table structure presented above as a reference.
+
+
+
+// 2 - Add at least five rows of data to both document collections.
+
+
+
+// 3 - Create the following queries:
+//      a - Select all departments.
+//      b - Select employees whose rate value is greater than 9.
+//              Order results by rate value so that smallest value is presented first.
+//      c - Select employees whose rate value is between 8-12.
+//              Order results by rate value so that greatest value is presented first.
+//      d - Select employees whose department is not A, B or C.
+//      e - Update rate value for all employees working in department B.
+//      f - Change the manager for department C so that the new manager will be David Smith.
+//      g - Remove employees whose department is C.
