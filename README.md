@@ -2,14 +2,9 @@
 
 This repo contains the questions and the answers which I solved during the onging period of the course.
 
-</br>
-
 ## Resources to learn SQL
 - [JAMK SQL Course](jamk-db-course) </br>
 - [MySQLtutorial](mysqltutorial)
-
-</br>
-</hr>
 
 ## Achieved grades
 | Exercise Name                                      |  Achieved Grade   | Total Grade |
@@ -24,7 +19,6 @@ This repo contains the questions and the answers which I solved during the ongin
 | Exercise set 7 - No SQL                            |       due         |      2      |
 
 </br>
-</hr>
 
 ## Exercise Database Design/Schema
 ![Databse Design/Schema](/ocelot_database_tables.png)

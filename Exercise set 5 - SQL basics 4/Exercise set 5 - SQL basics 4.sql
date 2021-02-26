@@ -39,7 +39,7 @@ ALTER TABLE SALARIES
 -- 3 - Add a new column called fromdate.
 --      The current date should be added automatically for this column when new data is inserted.
 ALTER TABLE SALARIES
-    ADD COLUMN FROMDATE DATE DEFAULT SUBSTRING(NOW(), 1, 10);
+    ADD COLUMN FROMDATE DATE DEFAULT CAST(NOW() AS DATE);
 
 -- 4 - Add automatic counter for salaryID column so that,
 --      this field value will be automatically generated each time a new data is inserted.
