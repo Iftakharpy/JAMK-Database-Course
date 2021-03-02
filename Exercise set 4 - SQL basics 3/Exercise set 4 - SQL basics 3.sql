@@ -39,6 +39,7 @@ ORDER BY e.empnum; -- extra: order
 -- 4 - Select all managers who have more than 10 employees on their department.
 --      Present manager and employee count in the result set.
 --      Order result set by employee count in descending order.
+-- solve 1
 SELECT st.manager, st.employee_count
 FROM ( SELECT d.manager, COUNT(e.empnum) AS employee_count
        FROM emps AS e
@@ -48,6 +49,14 @@ FROM ( SELECT d.manager, COUNT(e.empnum) AS employee_count
     ) AS st -- sub_table
 WHERE st.employee_count > 10
 ORDER BY st.employee_count DESC;
+-- solve 2
+SELECT d.manager, COUNT(e.empnum) AS employee_count
+    FROM emps AS e
+    INNER JOIN dept AS d
+    ON e.dept = d.dept
+    GROUP BY d.manager
+    HAVING employee_count>10
+    ORDER BY employee_count DESC;
 
 -- 5 - Create two columns for the result set:
 --          One for employees so that employee name is presented in the following format:
@@ -145,7 +154,7 @@ SELECT gname AS firstname, surname, phone
     INNER JOIN dept AS d
     ON e.dept=d.dept
     WHERE LOWER(duty)='marketing' OR manager = 'Mark G'
-ORDER BY manager, surname, firstname; -- extra: order
+ORDER BY surname, firstname; -- extra: order
 -- solve 2
 SELECT gname AS firstname, surname, phone
     FROM emps AS e
@@ -158,7 +167,7 @@ SELECT gname AS firstname, surname, phone
     INNER JOIN dept AS d
     ON e.dept=d.dept
     WHERE manager = 'Mark G'
-ORDER BY duty, surname, firstname; -- extra: order
+ORDER BY surname, firstname; -- extra: order
 
 -- 11 - Use subquery to select all employees whose rate value is the greatest possible.
 SELECT gname AS firstname, surname, rate
