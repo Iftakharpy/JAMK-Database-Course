@@ -20,11 +20,12 @@ ORDER BY e.surname;
 
 -- 2 - Select all employees and include also those who don't have department set.
 --      Include firstname, surname, department and duty of department in the result set.
+--      (Please notice that by default all employees have department set so this query won't return any rows with default data!)
 SELECT e.gname AS firstname, e.surname, e.dept, d.duty
 FROM emps AS e
 LEFT JOIN dept AS d
 ON e.dept=d.dept
-ORDER BY e.dept; -- extra: order
+ORDER BY e.dept, firstname; -- extra: order
 
 -- 3 - Select employees who have MB as a province (PROV) and whose manager is Black D.
 --      Present employee number and whole name in the result set.
@@ -107,6 +108,7 @@ ORDER BY dept, firstname; -- extra: order
 --              2. Employees whose computer identifier (PC) starts with letter T
 --          Result set should include department, budget, employees firstname and surname as well as computer's identifier
 --          Result set should be in ascending order by department
+-- solve 1
 SELECT gname AS firstname, surname, pc, e.dept, budget 
     FROM emps AS e 
     INNER JOIN dept AS d
@@ -118,6 +120,13 @@ SELECT gname as firstname, surname, pc, e.dept, budget
     INNER JOIN dept AS d
     ON e.dept=d.dept
     WHERE LEFT(pc, 1)='T' -- 2
+ORDER BY dept ASC;
+-- solve 2
+SELECT gname AS firstname, surname, pc, e.dept, budget 
+    FROM emps AS e 
+    INNER JOIN dept AS d
+    ON e.dept=d.dept
+    WHERE (budget BETWEEN 50000 AND 100000) OR LEFT(pc, 1)='T'
 ORDER BY dept ASC;
 
 
