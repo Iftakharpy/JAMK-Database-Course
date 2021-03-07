@@ -27,7 +27,9 @@
 
 // 1 - Firstly, create two document collections for the data.
 //      Use SQL table structure presented above as a reference.
-
+use exercise
+db.createCollection('dept')
+db.createCollection('emps')
 
 
 // 2 - Add at least five rows of data to both document collections.
