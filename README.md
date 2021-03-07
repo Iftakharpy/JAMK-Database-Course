@@ -4,7 +4,7 @@ This repo contains the questions and the answers which I solved during the ongin
 
 ## Resources to learn SQL
 - [JAMK SQL Course](jamk-db-course) </br>
-- [MySQLtutorial](mysqltutorial)
+- [MySQLtutorial](mysqltutorial) </br>
 - [NoSQL commands](nosql-commands)
 
 ## Achieved grades
@@ -31,4 +31,4 @@ String comparison starts from start/left side of a two strings. String compariso
 <!-- links for resources -->
 [mysqltutorial]: https://www.mysqltutorial.org/
 [jamk-db-course]: https://hantt.pages.labranet.jamk.fi/ttc2020-online-material/
-[nosql-commands]: https://github.com/Iftakharpy/JAMK-Database-Course/blob/main/Exercise%20set%207%20-%20NoSQL/commands.md
+[nosql-commands]: https://github.com/Iftakharpy/JAMK-Database-Course/blob/34d5651f1310405bd76b9c409063f0dae57d047d/Exercise%20set%207%20-%20NoSQL/commands.md
