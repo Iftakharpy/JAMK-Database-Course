@@ -31,4 +31,4 @@ String comparison starts from start/left side of a two strings. String compariso
 <!-- links for resources -->
 [mysqltutorial]: https://www.mysqltutorial.org/
 [jamk-db-course]: https://hantt.pages.labranet.jamk.fi/ttc2020-online-material/
-[nosql-commands]: Exercise%20set%207%20-%20NoSQL%5Ccommands.md
+[nosql-commands]: https://github.com/Iftakharpy/JAMK-Database-Course/blob/main/Exercise%20set%207%20-%20NoSQL/commands.md
