@@ -3,9 +3,9 @@
 This repo contains the questions and the answers which I solved during the onging period of the course.
 
 ## Resources to learn SQL
-- [JAMK SQL Course](jamk-db-course) </br>
-- [MySQLtutorial](mysqltutorial) </br>
-- [NoSQL commands](nosql-commands)
+- [JAMK SQL Course][jamk-db-course] </br>
+- [MySQLtutorial][mysqltutorial] </br>
+- [NoSQL commands][nosql-commands]
 
 ## Achieved grades
 | Exercise Name                                      |  Achieved Grade   | Total Grade |
