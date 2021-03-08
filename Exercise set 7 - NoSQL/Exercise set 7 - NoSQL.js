@@ -110,6 +110,20 @@ let emps_documents = [
         deduction: 5000
     },
     {
+        empnum: 10,
+        dept: "B",
+        gname: "alu",
+        surname: "kola",
+        address: "khet, sylhet",
+        city: "sylhet",
+        prov: "bb",
+        pc: "t0-37w",
+        phone: "01262535",
+        rate: 23,
+        taxcode: 42,
+        deduction: 782
+    },
+    {
         empnum: 3,
         dept: "C",
         gname: "simtia",
@@ -122,6 +136,20 @@ let emps_documents = [
         rate: 34,
         taxcode: 6,
         deduction: 700
+    },
+    {
+        empnum: 11,
+        dept: "C",
+        gname: "alia",
+        surname: "vhat",
+        address: "dhiray, comilla",
+        city: "comilla",
+        prov: "cc",
+        pc: "g2-92t",
+        phone: "02651485",
+        rate: 3,
+        taxcode: 5,
+        deduction: 1
     },
     {
         empnum: 4,
@@ -258,6 +286,12 @@ db.emps.find( { rate: {$gt: 9} } ).sort({rate: 1}).pretty()
 db.emps.find(
     { rate: {$gt: 9} },
     { rate: 1, _id: 0 } ).sort({rate: 1}).pretty() // select only rates
+// solution 3
+db.emps.aggregate([
+    { $match: {rate: {$gt:9}} }, // select rate>9
+    { $project: {rate: 1, _id: 0} }, // select only rate field
+    { $sort: {rate: 1} } // sort by rate ascending order
+]) // select only rates
 
 
 // 3(c) - Select employees whose rate value is between 8-12.
@@ -267,7 +301,7 @@ db.emps.find({ rate: {$gte: 8, $lte: 12} }).sort({rate: -1}).pretty()
 // solution 2
 db.emps.find(
     { rate: {$gte: 8, $lte: 12} },
-    { rate: 1, _id: 0 } ).sort({rate: 1}).pretty() // select only rates
+    { rate: 1, _id: 0 } ).sort({rate: -1}).pretty() // select only rates
 
 
 // 3(d) - Select employees whose department is not A, B or C.
@@ -288,12 +322,12 @@ db.emps.updateMany(
 db.emps.update(
     { dept: "B" },
     { $inc: {rate: 5} },
-    { multi: ture })  // increment rate values by 5.
+    { multi: true })  // increment rate values by 5.
 // solution 3
 db.emps.update(
     { dept: "B" },
     { $mul: {rate: 1.2} },
-    { multi: ture }) // increment rate values 20%.
+    { multi: true }) // increment rate values 20%.
 
 
 // 3(f) - Change the manager for department C so that the new manager will be David Smith.
@@ -301,9 +335,9 @@ db.emps.update(
 db.dept.update(
     { dept: "C" },
     { $set: {manager: "David Smith"} },
-    { multi: true })
+    { multi: false })
 // solution 2
-db.dept.updatMany(
+db.dept.updateMany(
     { dept: "C" },
     { $set: {manager: "David Smith"} })
 
