@@ -17,6 +17,22 @@
     3. db.<collection_name>.insertMany([ <document 1> , <document 2>, ... ])
     4. db.<collection_name>.insertOne(<document>)
 
+# Select documents from a collection
+    1. use <database_name>
+    2. db.<collection_name>.find(<query object>)
+    3. db.<collection_name>.aggregate([ <stage 1>, <stage 2>, ... , <stage n> ])
+
+# Update document(s)
+    1. use <database_name>
+    2. db.<collection_name>.update(<query object>, <update>, <options>)
+    3. db.<collection_name>.updateOne(<query object>, <update>, <options>)
+    4. db.<collection_name>.updateMany(<query object>, <update>, <options>)
+
+# Delete document(s)
+    1. use <database_name>
+    2. db.<collection_name>.remove(<query_object>, <options>)
+    3. db.<collection_name>.deleteOne(<query_object>)
+    4. db.<collection_name>.deleteMany(<query_object>)
 
 # Logical Operators
 | Name  | Description                          |
