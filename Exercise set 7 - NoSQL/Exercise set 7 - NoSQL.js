@@ -40,37 +40,37 @@ db.createCollection("emps")
 // 2 - Add at least five rows of data to both document collections.
 let dept_documents = [
     {
-        dept: "A",
+        _id: "A",
         manager: "iftakhar",
         duty: "programming",
         budget: 100000
     },
     {
-        dept: "B",
+        _id: "B",
         manager: "al-amin",
         duty: "marketing",
         budget: 50000
     },
     {
-        dept: "C",
+        _id: "C",
         manager: "simtia",
         duty: "accounting",
         budget: 40000
     },
     {
-        dept: "D",
+        _id: "D",
         manager: "kawsur",
         duty: "management",
         budget: 150000
     },
     {
-        dept: "E",
+        _id: "E",
         manager: "aisha",
         duty: "sleeping",
         budget: 30000
     },
     {
-        dept: "F",
+        _id: "F",
         manager: "ayan",
         duty: "crying",
         budget: 5000
@@ -80,9 +80,10 @@ let dept_documents = [
 db.dept.insert(dept_documents, {ordered: false}) // insert documents to "dept" collection
 
 
+
 let emps_documents = [
     {
-        empnum: 1,
+        _id: 1,
         dept: "A",
         gname: "iftakhar",
         surname: "husan",
@@ -96,7 +97,7 @@ let emps_documents = [
         deduction: 0
     },
     {
-        empnum: 2,
+        _id: 2,
         dept: "B",
         gname: "ayan",
         surname: "",
@@ -110,7 +111,7 @@ let emps_documents = [
         deduction: 5000
     },
     {
-        empnum: 10,
+        _id: 3,
         dept: "B",
         gname: "alu",
         surname: "kola",
@@ -124,7 +125,7 @@ let emps_documents = [
         deduction: 782
     },
     {
-        empnum: 3,
+        _id: 4,
         dept: "C",
         gname: "simtia",
         surname: "akter",
@@ -138,7 +139,7 @@ let emps_documents = [
         deduction: 700
     },
     {
-        empnum: 11,
+        _id: 5,
         dept: "C",
         gname: "alia",
         surname: "vhat",
@@ -152,7 +153,7 @@ let emps_documents = [
         deduction: 1
     },
     {
-        empnum: 4,
+        _id: 6,
         dept: "D",
         gname: "kawsur",
         surname: "ahmed",
@@ -166,7 +167,7 @@ let emps_documents = [
         deduction: 999
     },
     {
-        empnum: 5,
+        _id: 7,
         dept: "E",
         gname: "aisha",
         surname: "begum",
@@ -180,7 +181,7 @@ let emps_documents = [
         deduction: 273
     },
     {
-        empnum: 6,
+        _id: 8,
         dept: "F",
         gname: "nabiha",
         surname: "kawsur",
@@ -194,7 +195,7 @@ let emps_documents = [
         deduction: 240
     },
     {
-        empnum: 7,
+        _id: 9,
         dept: "G",
         gname: "bushra",
         surname: "kawsur",
@@ -208,7 +209,7 @@ let emps_documents = [
         deduction: 1000
     },
     {
-        empnum: 8,
+        _id: 10,
         dept: "H",
         gname: "aysha",
         surname: "kawsur",
@@ -222,7 +223,7 @@ let emps_documents = [
         deduction: 90
     },
     {
-        empnum: 9,
+        _id: 11,
         dept: "I",
         gname: "honey",
         surname: "singh",
@@ -236,7 +237,7 @@ let emps_documents = [
         deduction: 0
     },
     {
-        empnum: 9,
+        _id: 12,
         dept: "J",
         gname: "ranvir",
         surname: "singh",
@@ -248,6 +249,20 @@ let emps_documents = [
         rate: 10,
         taxcode: 7,
         deduction: 0
+    },
+    {
+        _id: 13,
+        dept: "A",
+        gname: "kabir",
+        surname: "singh",
+        address: "nai",
+        city: "nai",
+        prov: "we",
+        pc: "e2-53g",
+        phone: "53302443",
+        rate: 9,
+        taxcode: 2,
+        deduction: 10
     }
 ]
 
@@ -317,7 +332,7 @@ db.emps.find(
 // solution 1
 db.emps.updateMany(
     { dept: "B" },
-    { $set: {rate: 20} }) // set rate values to 20.
+    { $set: {rate: 100} }) // set rate values to 100.
 // solution 2
 db.emps.update(
     { dept: "B" },
@@ -333,12 +348,12 @@ db.emps.update(
 // 3(f) - Change the manager for department C so that the new manager will be David Smith.
 // solution 1
 db.dept.update(
-    { dept: "C" },
+    { _id: "C" },
     { $set: {manager: "David Smith"} },
     { multi: false })
 // solution 2
 db.dept.updateMany(
-    { dept: "C" },
+    { _id: "C" },
     { $set: {manager: "David Smith"} })
 
 
