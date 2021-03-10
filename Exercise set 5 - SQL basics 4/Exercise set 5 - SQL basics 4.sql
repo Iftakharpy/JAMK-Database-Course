@@ -64,7 +64,7 @@ CREATE TRIGGER validate_salary BEFORE INSERT ON SALARIES
 FOR EACH ROW
     BEGIN
         IF NEW.salary > 10000 THEN
-			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'INVALID SALARY: You are trying to insert SALARY more than 10000 euros';
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'INVALID SALARY: SALARY>10000';
         END IF;
     END $$
 DELIMITER ;
@@ -73,12 +73,25 @@ DELIMITER ;
 -- should delete the previously created trigger
 DROP TRIGGER validate_salary; -- Drop old trigger
 -- Create new trigger
+-- solve 1
 DELIMITER $$
 CREATE TRIGGER validate_salary BEFORE INSERT ON SALARIES
 FOR EACH ROW
     BEGIN
         IF NEW.salary > 10000 OR NEW.salary%2=1 THEN
-			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'INVALID value for SALARY: SALARY>10000 or SALARY is not even';
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'INVALID SALARY: SALARY>10000 or SALARY is not even';
+        END IF;
+    END $$
+DELIMITER ;
+-- solve 2 - precise message
+DELIMITER $$
+CREATE TRIGGER validate_salary BEFORE INSERT ON SALARIES
+FOR EACH ROW
+    BEGIN
+        IF NEW.salary > 10000 THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'INVALID SALARY: SALARY>10000';
+		ELSEIF  NEW.salary%2 = 1 THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'INVALID SALARY: SALARY is not even';
         END IF;
     END $$
 DELIMITER ;
