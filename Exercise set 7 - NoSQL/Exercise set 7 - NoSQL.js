@@ -1,7 +1,16 @@
 // Iftakhar Husan
 
-// ========================================================================================
 
+// =============================================================================================
+
+// 1 - Create two document collections and use SQL table structure presented above as a reference.
+//      Add at least five rows of data to both document collections.
+//      Important: Mongo documents must have "_id" as primary key so use it (dept and empnum will be normal key values)!
+use exercise
+db.createCollection("dept")
+db.createCollection("emps")
+
+// Collection structure of dept.
 // |-----------------------------|
 // |          DEPT               |
 // |-----------|-----------------|
@@ -11,37 +20,7 @@
 // | BUDGET    |  decimal(10,2)  |
 // |-----------|-----------------|
 
-// |-------------------------------|
-// |            EMPS               |
-// |-------------|-----------------|
-// | EMPNUM      | decimal(3,0) PK |
-// | DEPT        | varchar(4)      |
-// | GNAME       | varchar(9)      |
-// | SURNAME     | varchar(12)     |
-// | ADDRESS     | varchar(18)     |
-// | CITY        | varchar(10)     |
-// | PROV        | char(2)         |
-// | PC          | varchar(6)      |
-// | PHONE       | char(8)         |
-// | RATE        | decimal(6,2)    |
-// | TAXCODE     | decimal(2,0)    |
-// | DEDUCTION   | decimal(6,2)    |
-// |-------------|-----------------|
-
-
-// ========================================================================================
-
-
-// 1 - Firstly, create two document collections for the data.
-//      Use SQL table structure presented above as a reference.
-use exercise
-db.createCollection("dept")
-db.createCollection("emps")
-
-
-// ========================================================================================
-
-// 2 - Add at least five rows of data to both document collections.
+// data for dept collection
 let dept_documents = [
     {
         _id: "A",
@@ -81,10 +60,29 @@ let dept_documents = [
     }
 ]
 
-db.dept.insert(dept_documents, {ordered: false}) // insert documents to "dept" collection
+// Insert documents to "dept" collection
+db.dept.insert(dept_documents, { ordered: false })
 
 
+// Collection structure of emps.
+// |-------------------------------|
+// |            EMPS               |
+// |-------------|-----------------|
+// | EMPNUM      | decimal(3,0) PK |
+// | DEPT        | varchar(4)      |
+// | GNAME       | varchar(9)      |
+// | SURNAME     | varchar(12)     |
+// | ADDRESS     | varchar(18)     |
+// | CITY        | varchar(10)     |
+// | PROV        | char(2)         |
+// | PC          | varchar(6)      |
+// | PHONE       | char(8)         |
+// | RATE        | decimal(6,2)    |
+// | TAXCODE     | decimal(2,0)    |
+// | DEDUCTION   | decimal(6,2)    |
+// |-------------|-----------------|
 
+// data for emps collection
 let emps_documents = [
     {
         _id: 1,
@@ -270,12 +268,13 @@ let emps_documents = [
     }
 ]
 
-db.emps.insertMany(emps_documents, {ordered: false}) // insert documents to "emps" collection
+// Insert documents to "emps" collection
+db.emps.insertMany(emps_documents, {ordered: false})
 
 
 // ========================================================================================
 
-// 3 - Create the following queries:
+// 2 - Create the following queries:
 //      a - Select all departments.
 //      b - Select employees whose rate value is greater than 9.
 //              Order results by rate value so that smallest value is presented first.
@@ -287,52 +286,61 @@ db.emps.insertMany(emps_documents, {ordered: false}) // insert documents to "emp
 //      g - Remove employees whose department is C.
 
 
-// 3(a)- Select all departments.
+// 2(a)- Select all departments.
 // solution 1
 db.dept.find() 
-//solution 2
+// solution 2
+db.dept.find().pretty()
+// solution 3
 let selected = db.dept.find()
 while ( selected.hasNext() ){
     printjson(selected.next())
 }
 
 
-// 3(b) - Select employees whose rate value is greater than 9.
-//              Order results by rate value so that smallest value is presented first.
+// 2(b) - Select employees whose rate value is greater than 9.
+//        Order results by rate value so that smallest value is presented first.
 // solution 1
-db.emps.find( { rate: {$gt: 9} } ).sort({rate: 1}).pretty()
+db.emps.find({ rate: {$gt: 9} }).sort({rate: 1}).pretty()
 // solution 2
 db.emps.find(
     { rate: {$gt: 9} },
-    { rate: 1, _id: 0 } ).sort({rate: 1}).pretty() // select only rates
+    { rate: 1, _id: 0 }).sort({rate: 1}).pretty() // select only rates
 // solution 3
 db.emps.aggregate([
-    { $match: {rate: {$gt:9}} }, // select rate>9
+    { $match: {rate: {$gt:9}} }, // select rates>9
     { $project: {rate: 1, _id: 0} }, // select only rate field
-    { $sort: {rate: 1} } // sort by rate ascending order
+    { $sort: {rate: 1} } // sort/order by rate ascending order
 ]) // select only rates
 
 
-// 3(c) - Select employees whose rate value is between 8-12.
-//              Order results by rate value so that greatest value is presented first.
+// 2(c) - Select employees whose rate value is between 8-12.
+//        Order results by rate value so that greatest value is presented first.
 // solution 1
 db.emps.find({ rate: {$gte: 8, $lte: 12} }).sort({rate: -1}).pretty()
 // solution 2
 db.emps.find(
     { rate: {$gte: 8, $lte: 12} },
-    { rate: 1, _id: 0 } ).sort({rate: -1}).pretty() // select only rates
+    { rate: 1, _id: 0 }).sort({rate: -1}).pretty() // select only rates
+// solution 3
+db.emps.aggregate([
+    { $match: {rate: {$gte: 8, $lte: 12}} }, // select rates between 8-12
+    { $project: {rate: 1, _id: 0} }, // select only rate field
+    { $sort: {rate: -1} } // sort/order by rate ascending order
+]) // select only rates
 
 
-// 3(d) - Select employees whose department is not A, B or C.
+// 2(d) - Select employees whose department is not A, B or C.
 // solution 1
-db.emps.find({ dept: {$nin: ["A", "B", "C"]} }).sort({ dept: 1 }).pretty()
+let exclude = ["A", "B", "C"]
+db.emps.find({ dept: {$nin: exclude} }).sort({ dept: 1 }).pretty()
 // solution 2
 db.emps.find(
-    {dept: {$nin: ["A", "B", "C"]} },
-    {dept: 1, _id: 0}).sort({dept: 1}).pretty() // select only depts
+    { dept: {$nin: exclude} },
+    { dept: 1, _id: 0 }).sort({ dept: 1 }).pretty() // select only depts
 
 
-// 3(e) - Update rate value for all employees working in department B.
+// 2(e) - Update rate value for all employees working in department B.
 // solution 1
 db.emps.updateMany(
     { dept: "B" },
@@ -349,19 +357,19 @@ db.emps.update(
     { multi: true }) // increment rate values 20%.
 
 
-// 3(f) - Change the manager for department C so that the new manager will be David Smith.
+// 2(f) - Change the manager for department C so that the new manager will be David Smith.
 // solution 1
 db.dept.update(
     { _id: "C" },
     { $set: {manager: "David Smith"} },
     { multi: false })
 // solution 2
-db.dept.updateMany(
+db.dept.updateOne(
     { _id: "C" },
     { $set: {manager: "David Smith"} })
 
 
-// 3(g) - Remove employees whose department is C.
+// 2(g) - Remove employees whose department is C.
 // solution 1
 db.emps.remove({ dept: "C" })
 // solution 2
