@@ -17,7 +17,9 @@ This repo contains the questions and the answers which I solved during the ongin
 | Exercise set 4 - SQL basics 3                      |         3         |      3      |
 | Exercise set 5 - SQL basics 4                      |         3         |      3      |
 | Exercise set 6 - SQL basics 5                      |         3         |      3      |
-| Exercise set 7 - No SQL                            |       due         |      2      |
+| Exercise set 7 - No SQL                            |         2         |      2      |
+| Exam                                               |        46         |     50      |
+| Total                                              |        66         |     70      |
 
 </br>
 
